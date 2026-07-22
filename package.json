@@ -1,6 +1,6 @@
 {
   "name": "blockdesk-exchange",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "description": "Installable high-value digital asset order desk for Windows and Ubuntu",
   "author": {
@@ -65,8 +65,6 @@
       ],
       "category": "Finance",
       "maintainer": "MrExplorerBC <MrExplorerBC@users.noreply.github.com>",
-      "desktopName": "blockdesk-exchange.desktop",
-      "syncDesktopName": true,
       "artifactName": "BlockDesk-Exchange-${version}-${arch}.${ext}"
     }
   }
