@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';import {z} from 'zod';import {authenticate,createSession} from '@/lib/auth';
+const schema=z.object({email:z.string().email().max(254),password:z.string().min(12).max(200)});export async function POST(req:Request){try{const body=schema.parse(await req.json());if(!await authenticate(body.email,body.password))return NextResponse.json({error:'Invalid credentials'},{status:401});await createSession(body.email);return NextResponse.json({ok:true});}catch{return NextResponse.json({error:'Invalid request'},{status:400})}}

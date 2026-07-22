@@ -1,0 +1,2 @@
+import 'server-only';
+export const depositAddresses={BTC:'bc1qr58snsz9gey4mvcmf2e0gaxfya6hf49g07kcru',ETH:'0xA71D9E60235a29381366aeC4B6f57438b48E2768',SOL:'BXnNT1gyrSmHyfuR5k9CV1NcuP9emNVjnZBhgv95EpJg',BNB:'0xA71D9E60235a29381366aeC4B6f57438b48E2768',POL:'0xA71D9E60235a29381366aeC4B6f57438b48E2768'} as const;

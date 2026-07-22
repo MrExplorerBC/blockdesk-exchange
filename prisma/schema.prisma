@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  AWAITING_DEPOSIT
+  TRANSACTION_DETECTED
+  CONFIRMING
+  DEPOSIT_CONFIRMED
+  MANUAL_REVIEW
+  PAYOUT_QUEUED
+  COMPLETED
+  EXPIRED
+  FAILED
+  REFUNDED
+}
+
+model Order {
+  id                 String      @id @default(cuid())
+  publicId           String      @unique @default(uuid())
+  sendAsset          String
+  receiveAsset       String
+  sendAmount         Decimal     @db.Decimal(36, 18)
+  expectedUsd        Decimal     @db.Decimal(18, 2)
+  receiveAmount      Decimal     @db.Decimal(36, 18)
+  destinationAddress String
+  depositAddress     String
+  transactionHash    String?     @unique
+  status             OrderStatus @default(AWAITING_DEPOSIT)
+  quoteExpiresAt     DateTime
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  actor     String
+  metadata  Json
+  createdAt DateTime @default(now())
+}
