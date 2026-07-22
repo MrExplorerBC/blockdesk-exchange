@@ -1,6 +1,6 @@
 {
   "name": "blockdesk-exchange",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "Installable high-value digital asset order desk for Windows and Ubuntu",
   "author": {
@@ -11,8 +11,8 @@
   "scripts": {
     "dev": "concurrently -k \"vite\" \"wait-on http://127.0.0.1:5173 && electron .\"",
     "build": "tsc --noEmit && vite build",
-    "dist:win": "npm run build && electron-builder --win nsis",
-    "dist:linux": "npm run build && electron-builder --linux AppImage deb",
+    "dist:win": "npm run build && electron-builder --win nsis --publish never",
+    "dist:linux": "npm run build && electron-builder --linux AppImage deb --publish never",
     "test": "vitest run"
   },
   "dependencies": {
