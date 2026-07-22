@@ -1,1 +1,12 @@
-{"name":"blockdesk-exchange","version":"0.1.0","private":true,"scripts":{"dev":"next dev","build":"prisma generate && next build","start":"next start","lint":"next lint","typecheck":"tsc --noEmit","test":"vitest run","db:push":"prisma db push"},"dependencies":{"@prisma/client":"^6.12.0","argon2":"^0.41.1","jose":"^6.0.12","lucide-react":"^0.468.0","next":"15.5.9","qrcode.react":"^4.2.0","react":"18.3.1","react-dom":"18.3.1","zod":"^3.25.76"},"devDependencies":{"@types/node":"^22.10.5","@types/react":"^18.3.18","@types/react-dom":"^18.3.5","autoprefixer":"^10.4.20","postcss":"^8.4.49","prisma":"^6.12.0","tailwindcss":"^3.4.17","typescript":"^5.7.2","vitest":"^2.1.8"}}
+{
+  "name":"blockdesk-exchange",
+  "version":"1.0.0",
+  "private":true,
+  "description":"Installable high-value digital asset order desk for Windows and Ubuntu",
+  "author":"MrExplorerBC",
+  "main":"electron/main.cjs",
+  "scripts":{"dev":"concurrently -k \"vite\" \"wait-on http://127.0.0.1:5173 && electron .\"","build":"tsc --noEmit && vite build","dist:win":"npm run build && electron-builder --win nsis","dist:linux":"npm run build && electron-builder --linux AppImage deb","test":"vitest run"},
+  "dependencies":{"@vitejs/plugin-react":"^4.3.4","electron-store":"^10.0.0","lucide-react":"^0.468.0","react":"18.3.1","react-dom":"18.3.1","vite":"^6.0.7","zod":"^3.25.76"},
+  "devDependencies":{"@types/node":"^22.10.5","@types/react":"^18.3.18","@types/react-dom":"^18.3.5","concurrently":"^9.1.2","electron":"^35.7.5","electron-builder":"^26.0.12","typescript":"^5.7.2","vitest":"^2.1.8","wait-on":"^8.0.1"},
+  "build":{"appId":"com.mrexplorerbc.blockdesk","productName":"BlockDesk Exchange","asar":true,"files":["dist/**/*","electron/**/*","package.json"],"directories":{"output":"release"},"win":{"target":["nsis"],"artifactName":"BlockDesk-Exchange-Setup-${version}.${ext}"},"nsis":{"oneClick":false,"allowToChangeInstallationDirectory":true,"createDesktopShortcut":true},"linux":{"target":["AppImage","deb"],"category":"Finance","artifactName":"BlockDesk-Exchange-${version}-${arch}.${ext}"}}
+}

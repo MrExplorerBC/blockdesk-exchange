@@ -1,4 +1,4 @@
-name: CI
+name: Desktop builds
 on: [push, pull_request]
 jobs:
   verify:
@@ -8,9 +8,22 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22, cache: npm}
       - run: npm ci
-      - run: npm run typecheck
       - run: npm test
       - run: npm run build
-        env:
-          DATABASE_URL: postgresql://user:pass@localhost:5432/db
-          AUTH_SECRET: ci-only-secret-ci-only-secret-1234
+  installers:
+    if: startsWith(github.ref, 'refs/tags/v')
+    strategy:
+      matrix: {os: [windows-latest, ubuntu-latest]}
+    runs-on: ${{ matrix.os }}
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22, cache: npm}
+      - run: npm ci
+      - run: npm run dist:win
+        if: runner.os == 'Windows'
+      - run: npm run dist:linux
+        if: runner.os == 'Linux'
+      - uses: softprops/action-gh-release@v2
+        with: {files: "release/*"}

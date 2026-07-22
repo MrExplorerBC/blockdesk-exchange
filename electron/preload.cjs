@@ -1,0 +1,2 @@
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('blockdesk',Object.freeze({status:()=>ipcRenderer.invoke('app:status'),setup:(x)=>ipcRenderer.invoke('auth:setup',x),login:(x)=>ipcRenderer.invoke('auth:login',x),logout:()=>ipcRenderer.invoke('auth:logout'),quote:(x)=>ipcRenderer.invoke('order:quote',x),createOrder:(x)=>ipcRenderer.invoke('order:create',x),listOrders:()=>ipcRenderer.invoke('order:list')}));

@@ -1,16 +1,30 @@
-# BlockDesk Exchange
+# BlockDesk Exchange Desktop
 
-Security-conscious, testnet-first high-value crypto exchange order workflow. The UI accepts requests of at least USD 10,000 but **does not expose mainnet deposit instructions or execute payouts** until custody and compliance integrations are configured.
+Installable Windows and Ubuntu desktop application for managing high-value digital-asset exchange requests from USD 10,000.
 
-## Local setup
+## Security posture
 
-1. Copy `.env.example` to `.env` and configure PostgreSQL.
-2. Generate an Argon2id password hash offline: `node -e "require('argon2').hash(process.argv[1]).then(console.log)" "your-long-password"`
-3. Set `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH`, and a random 32+ byte `AUTH_SECRET`.
-4. Run `npm install`, `npm run db:push`, and `npm run dev`.
+- Electron renderer is sandboxed with Node integration disabled and context isolation enabled.
+- Renderer access is limited to a narrow, validated IPC bridge.
+- The administrator creates an email/password login on first launch.
+- Passwords are hashed with scrypt and configuration/order records are encrypted using the operating system credential store.
+- Login attempts are rate-limited.
+- Mainnet deposit instructions and payouts are deliberately locked.
 
-## Mainnet safety gate
+This is an order-management foundation, not a licensed or production-ready exchange. Before accepting funds, integrate licensed custody, unique deposit addresses, live signed price feeds, KYC/AML, sanctions and wallet screening, chain-specific confirmation workers, double-entry accounting, independent security review, and jurisdiction-specific legal approval.
 
-The supplied BTC, Ethereum, Solana, BNB Smart Chain, and Polygon collection addresses are kept in server-side asset configuration, but are not sent to unauthenticated clients or returned from order APIs. Before enabling deposits, prove wallet control, replace static pricing with signed multi-provider quotes, integrate KYC/AML and wallet screening, use unique custody-managed deposit addresses, build chain-specific confirmation workers, commission an independent security audit, and obtain jurisdiction-specific legal approval.
+## Development
 
-Never commit private keys, seed phrases, `.env` files, or custody credentials.
+```bash
+npm install
+npm run dev
+npm test
+npm run build
+```
+
+## Installers
+
+Windows: `npm run dist:win`  
+Ubuntu: `npm run dist:linux`
+
+Pushing a version tag such as `v1.0.0` runs GitHub Actions on Windows and Ubuntu and attaches the generated `.exe`, `.AppImage`, and `.deb` packages to the GitHub Release.

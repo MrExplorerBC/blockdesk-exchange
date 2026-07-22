@@ -1,0 +1,1 @@
+interface BlockDeskAPI{status():Promise<any>;setup(x:{email:string,password:string}):Promise<any>;login(x:{email:string,password:string}):Promise<any>;logout():Promise<any>;quote(x:any):Promise<any>;createOrder(x:any):Promise<any>;listOrders():Promise<any[]>}interface Window{blockdesk:BlockDeskAPI}
